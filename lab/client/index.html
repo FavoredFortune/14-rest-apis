@@ -63,6 +63,8 @@
         <li class="admin"><a href="/books/new">add book</a></li>
         <li class="admin"><a href="/books/search">search g-books</a></li>
         <!-- COMMENT: This will allow users to log in as an admin using a passphrase, but there is no way to log out. How would you enhance this application to allow a user to log out? -->
+        <!-- RESPONSE: I would add a link to logout within the navigation and have a message saying you've been logged out, using an event listener on the logout button, with a subsequent message/alert saying "you've been logged out". I would then have a function remove the token from the server or localStorage (depending on where stored, though server is far more secure) and I would clear out all "admin" view items from the index.html. 
+        Also, I would add an alert/message after you login, saying "thanks for logging in" which doesn't exist now and is a poor user experience. -->
         <li><a href="/admin">login</a></li>
       </ul>
     </nav>
