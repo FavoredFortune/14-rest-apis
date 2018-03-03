@@ -14,7 +14,7 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const TOKEN = process.env.TOKEN;
 
 // COMMENT: Explain the following line of code. What is the API_KEY? Where did it come from?
-//RESPONSE: The API key is a kind of token that shows you're an authorized user for a specific API (Application Programming Interface) from a third party data provider, in this case Google. By going to Google's API developer tools, we were able to get a token to set into our environmental variables to prove who we are. This also allows Google to monitor how many API requests we make and limit our requests, if they so choose.
+//RESPONSE: The API key is a kind of token that shows you're an authorized user for a specific API (Application Programming Interface) from a third party data provider, in this case Google. By going to Google's API developer tools, we were able to get a token to set into our environmental variables to prove who we are. This also allows Google to monitor how many API requests we make and limit our requests, if they so choose, or even deny our requests in the future completely. 
 const API_KEY = process.env.GOOGLE_API_KEY;
 
 // Database Setup
@@ -32,14 +32,14 @@ app.get('/api/v1/books/find', (req, res) => {
   let url = 'https://www.googleapis.com/books/v1/volumes';
 
   // COMMENT: Explain the following four lines of code. How is the query built out? What information will be used to create the query?
-  //RESPONSE: By setting up the query as a variable, each part of the query(search form) can be used as part of a string in a search query sent back to the API at Google.
+  //RESPONSE: By setting up the query as a variable, each part of the query(search form) can be used as part of a string in a search query sent back to the API at Google via the controller from the client view.
   let query = '';
   if(req.query.title) query += `+intitle:${req.query.title}`;
   if(req.query.author) query += `+inauthor:${req.query.author}`;
   if(req.query.isbn) query += `+isbn:${req.query.isbn}`;
 
   // COMMENT: What is superagent? How is it being used here? What other libraries are available that could be used for the same purpose?
-  //RESPONSE: The superagent is a piece of middleware (a specialized npm package of JavaScript) that helps our client view make queries of an external api/database/model.
+  //RESPONSE: The superagent is a piece of middleware (a specialized npm package of JavaScript) that helps our client view send queries via the controller to an external api/database/model for requested content.
   superagent.get(url)
     .query({'q': query})
     .query({'key': API_KEY})
@@ -50,11 +50,11 @@ app.get('/api/v1/books/find', (req, res) => {
       let { title, authors, industryIdentifiers, imageLinks, description } = book.volumeInfo;
 
       // COMMENT: What is the purpose of the following placeholder image?
-      //RESPONSE: If a user or admin adds a new book to the application's database and it doesn't have an image, this image will display to give the entire application a consistent look and feel for each book.
+      //RESPONSE: If a user or admin adds a new book to the application's database and it doesn't have an image, this image will display to give the entire application a consistent look and feel to the user for each book. 
       let placeholderImage = 'http://www.newyorkpaddy.com/images/covers/NoCoverAvailable.jpg';
 
       // COMMENT: Explain how ternary operators are being used below.
-      //RESPONSE: Each ternary operator below is helping to build a new book and provide placeholder image(defined above)/text when a book is created with out all properties the application displays as a standard for users.
+      //RESPONSE: Each ternary operator below is helping to build a new book object with associated key value pairs and provide placeholder image(defined above)/text when a book is created with out all properties. This allows the application to display all book properities users expect to see, even when a key doesn't have a value in the database being queried.
       return {
         title: title ? title : 'No title available',
         author: authors ? authors[0] : 'No authors available',
@@ -69,7 +69,7 @@ app.get('/api/v1/books/find', (req, res) => {
 });
 
 // COMMENT: How does this route differ from the route above? What does ':isbn' refer to in the code below?
-//RESPONSE: This route differs from above because it more efficiently searches the Google database by a most unique identifier (isbn) alone. Whereas the route above allows for searching by any variable listed in the query variable, including, but not limited to isbn.
+//RESPONSE: This route differs from above because it more efficiently searches the Google database by a most unique identifier (isbn) alone. Whereas the route above allows for searching by any value listed in the query variable, including, but not limited to isbn.
 app.get('/api/v1/books/find/:isbn', (req, res) => {
   let url = 'https://www.googleapis.com/books/v1/volumes';
   superagent.get(url)

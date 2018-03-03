@@ -14,4 +14,4 @@ var app = app || {};
   };
 
   module.errorView = errorView;
-})(app)
+})(app);
