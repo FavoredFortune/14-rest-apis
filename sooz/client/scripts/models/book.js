@@ -56,7 +56,7 @@ var __API_URL__ = 'http://localhost:3000';
       .catch(errorCallback);
 
   // COMMENT: Where is this method invoked? What is passed in as the 'book' argument when invoked? What callback will be invoked after Book.loadAll is invoked?
-  //RESPONSE: This method is invoked on the book-view.js within the initSearchFormPage function. The book argument, when invoked within this find method, is an object with three key value pairs: title, author, isbn. The initSearchResultsPage function will be invoked after the Book.loadAll is invoked and operates as a call back in the Book.find function.
+  //RESPONSE: This method is invoked on the book-view.js within the initSearchFormPage function. The book argument, when invoked within this find method, is an object with three key value pairs: title, author, isbn. The initSearchResultsPage function will be invoked after the Book.loadAll is invoked and operates as a callback in the Book.find function.
 
   Book.find = (book, callback) =>
     $.get(`${__API_URL__}/api/v1/books/find`, book)

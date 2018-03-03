@@ -92,7 +92,7 @@ var app = app || {};
       event.preventDefault();
 
       // COMMENT: What is the event.target, below? What will happen if the user does not provide the information needed for the title, author, or isbn properties?
-      // RESPONSE: The event.target values are paired with the following keys: title, author, isbn. These key value pairs help to create an object to be searched for from the form inputs.
+      // RESPONSE: The event.target sets the input values for each item as a key value pair ( title, author, isbn). These key value pairs will help to create an object called "book". This "book" can then be passed on to the controller and model using route.js and server.js.
       let book = {
         title: event.target.title.value || '',
         author: event.target.author.value || '',
@@ -110,7 +110,7 @@ var app = app || {};
   };
 
   // COMMENT: What is the purpose of this method?
-  // RESPONSE: This builds the search results on the index.html page for the user to view.
+  // RESPONSE: This appends the content to the search results section of the DOM on the index.html page for the user to view.
   bookView.initSearchResultsPage = function() {
     resetView();
     $('.search-results').show();
@@ -122,16 +122,16 @@ var app = app || {};
     $('.detail-button a').text('Add to list').attr('href', '/');
     $('.detail-button').on('click', function(e) {
       // COMMENT: Explain the following line of code.
-      // RESPONSE: This line of code helps to find a book in the database and return that single book in the correct part of the DOM on the index.html page
+      // RESPONSE: This line of code helps to find a book in the database and return that single book in the correct part of the DOM on the index.html page.
       module.Book.findOne($(this).parent().parent().parent().data('bookid'));
     });
   };
 
   // COMMENT: Explain the following line of code.
-  // RESPONSE: This line invokes the functions within the IFFE function when invoked.
+  // RESPONSE: This line invokes all the bookView methods within the IFFE function.
   module.bookView = bookView;
 
   // COMMENT: Explain the following line of code.
-  //RESPONSE: This creates an object-like function that allows us to access all the methods within upon page load using the variable "app" (currently an arguement below).
+  //RESPONSE: This creates an object-like function that allows us to access all the methods within it upon page load of the application using the variable "app" (currently an parameter below).
 })(app);
 
